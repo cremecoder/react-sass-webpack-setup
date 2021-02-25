@@ -17,7 +17,9 @@ const config = {
   devServer: {
     port: 3000,
     contentBase: path.resolve(__dirname, "dist"),
-    hot: true
+    hot: true,
+    historyApiFallback: true,
+    open: true
   },
   module: {
     rules: [
@@ -31,7 +33,13 @@ const config = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"]
+            presets: [
+              [
+                "@babel/preset-env",
+                { useBuiltIns: "usage", corejs: 3, targets: "defaults" }
+              ],
+              "@babel/preset-react"
+            ]
           }
         }
       }
@@ -42,7 +50,11 @@ const config = {
 if (currentTask == "build") {
   config.mode = "production"
   config.module.rules[0].use[0] = MiniCssExtractPlugin.loader
-  config.plugins.push(new MiniCssExtractPlugin({ filename: "index.[hash].css" }), new CleanWebpackPlugin(), new WebpackManifestPlugin())
+  config.plugins.push(
+    new MiniCssExtractPlugin({ filename: "index.[hash].css" }),
+    new CleanWebpackPlugin(),
+    new WebpackManifestPlugin()
+  )
 }
 
 module.exports = config
