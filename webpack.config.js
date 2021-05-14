@@ -57,7 +57,7 @@ if (currentTask == "build") {
   config.mode = "production"
   config.module.rules[0].use[0] = MiniCssExtractPlugin.loader
   config.plugins.push(
-    new MiniCssExtractPlugin({ filename: "index.[hash].css" }),
+    new MiniCssExtractPlugin({ filename: "main.[hash].css" }),
     new CleanWebpackPlugin(),
     new WebpackManifestPlugin()
   )
